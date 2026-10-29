@@ -1,0 +1,117 @@
+<div class="container">
+    <!-- 设置阶段 -->
+    <div class="phase-setup" id="phaseSetup">
+        <div class="header">
+            <h1>🍅 微习惯番茄钟</h1>
+            <p>基于福格行为模型 B=MAP<br>小到你不可能失败</p>
+        </div>
+        
+        <!-- 新增：每日进度条 -->
+        <div class="daily-progress">
+            <div class="progress-header">
+                <span class="progress-label">今日目标</span>
+                <div class="progress-controls">
+                    <button class="adjust-btn" onclick="adjustTarget(-1)">-</button>
+                    <span class="target-num" id="targetNum">6</span>
+                    <button class="adjust-btn" onclick="adjustTarget(1)">+</button>
+                </div>
+            </div>
+            <div class="tomato-track" id="tomatoTrack">
+                <!-- 卡通番茄会通过 JS 生成 -->
+            </div>
+            <div class="progress-text" id="progressText">0 / 6 个番茄</div>
+        </div>
+        
+        <div class="mode-select">
+            <div class="mode-btn active" onclick="selectMode(this, 'standard')">
+                <div class="mode-title">🎯 标准模式</div>
+                <div class="mode-desc">25分钟专注</div>
+            </div>
+            <div class="mode-btn micro" onclick="selectMode(this, 'micro')">
+                <div class="mode-title">🌱 微习惯</div>
+                <div class="mode-desc">仅2分钟<br>降低启动门槛</div>
+            </div>
+        </div>
+        
+        <button class="start-btn" onclick="startTimer()">开始专注</button>
+        
+        <div class="history" id="historyList">
+            <div style="margin-bottom: 8px; font-weight: 600;">今日记录</div>
+            <div id="historyItems"></div>
+        </div>
+    </div>
+    
+    <!-- 专注阶段 -->
+    <div class="phase-focus" id="phaseFocus" style="display:none;">
+        <div class="timer-display">
+            <svg class="timer-circle" width="280" height="280">
+                <defs>
+                    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#667eea" />
+                        <stop offset="100%" style="stop-color:#764ba2" />
+                    </linearGradient>
+                </defs>
+                <circle class="timer-bg" cx="140" cy="140" r="130"></circle>
+                <circle class="timer-progress" id="progressCircle" cx="140" cy="140" r="130"></circle>
+            </svg>
+            <div class="timer-text">
+                <div class="time" id="timeDisplay">25:00</div>
+                <div class="state">专注中</div>
+            </div>
+        </div>
+        
+        <div class="breath-hint">吸气 4 秒 · 屏住 4 秒 · 呼气 6 秒</div>
+        
+        <button class="rescue-btn" onclick="showRescue()">😰 我想逃避（情绪救援）</button>
+        
+        <div class="control-btns">
+            <button class="control-btn" onclick="pauseTimer()">暂停</button>
+            <button class="control-btn" onclick="stopTimer()">结束</button>
+        </div>
+    </div>
+    
+    <!-- 庆祝阶段 -->
+    <div class="phase-celebrate" id="phaseCelebrate" style="display:none;">
+        <div class="celebrate-box">
+            <div class="celebrate-icon">🎉</div>
+            <div class="celebrate-title">小胜利！</div>
+            <div class="celebrate-msg" id="celebrateMsg">
+                你刚刚克服了启动阻力，<br>这比完成本身更重要。
+            </div>
+            
+            <!-- 新增：庆祝时的番茄生长动画 -->
+            <div class="tomato-grow" id="tomatoGrow"></div>
+            
+            <div class="anchor-suggestion">
+                <strong>🧭 下一个锚点动作：</strong><br>
+                <span id="anchorText">喝一口水，伸展15秒</span>
+            </div>
+            
+            <button class="next-btn" onclick="backToSetup()">标记胜利 · 继续</button>
+        </div>
+    </div>
+</div>
+
+<!-- 情绪救援弹窗 -->
+<div class="rescue-overlay" id="rescueOverlay" style="display:none;">
+    <div class="rescue-card">
+        <div class="rescue-title">🤝 我注意到你想逃避</div>
+        <div class="rescue-sub">拖延不是懒惰，是情绪在求助。选择你现在的感受：</div>
+        
+        <div class="emotion-grid">
+            <button class="emotion-btn" onclick="selectEmotion('anxiety')">😰 焦虑/压力</button>
+            <button class="emotion-btn" onclick="selectEmotion('boredom')">😴 无聊/没动力</button>
+            <button class="emotion-btn" onclick="selectEmotion('perfectionism')">🎯 完美主义<br>怕做不好</button>
+            <button class="emotion-btn" onclick="selectEmotion('overwhelm')">🌪️ 任务太大<br>不知从何开始</button>
+        </div>
+        
+        <div class="rescue-response" id="rescueResponse" style="display:none;"></div>
+        
+        <div class="rescue-actions">
+            <button class="rescue-action-btn continue-btn" onclick="continueAfterRescue()">💪 降低难度继续</button>
+            <button class="rescue-action-btn pause-btn" onclick="restAfterRescue()">🛋️ 休息5分钟</button>
+        </div>
+    </div>
+</div>
+
+<div class="particles" id="particles"></div>
