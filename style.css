@@ -684,3 +684,58 @@ body {
         height: 24px;
     }
 }
+/* ===== 手机端适配 - 修正版 ===== */
+@media screen and (max-width: 480px) {
+    body {
+        padding: 10px;
+        align-items: flex-start;
+    }
+    
+    .container {
+        padding: 16px;
+        max-width: 100%;
+    }
+    
+    /* 关键：改小计时器 */
+    .timer-display {
+        width: 200px;
+        height: 200px;
+        margin-bottom: 16px;
+    }
+    
+    .timer-circle {
+        width: 200px;
+        height: 200px;
+    }
+    
+    .timer-circle circle {
+        cx: 100;  /* 圆心居中 */
+        cy: 100;
+        r: 90;    /* 半径缩小 */
+    }
+    
+    .time {
+        font-size: 32px;
+    }
+    
+    /* 按钮别太大 */
+    .rescue-btn {
+        padding: 10px;
+        font-size: 13px;
+        margin-bottom: 8px;
+    }
+    
+    .control-btns {
+        gap: 8px;
+    }
+    
+    .control-btn {
+        padding: 10px;
+        font-size: 13px;
+    }
+    
+    .breath-hint {
+        font-size: 12px;
+        margin-bottom: 12px;
+    }
+}
